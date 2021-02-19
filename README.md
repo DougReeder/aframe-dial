@@ -1,6 +1,6 @@
 # Dial for A-Frame WebXR
 
-A shader with a static transparent texture and dynamic pie-wedge shape, suitable for a timer or gauge. Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
+A component with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer or gauge. Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
 
 ![sample screenshot](sample.png)
 
@@ -15,13 +15,16 @@ Include using
 
 Basic use:
 ```html
-<a-entity dial="src:#dial-face; radius:0.4; thetaStart:135; thetaEnd:315; color:black;"></a-entity>
+<a-assets>
+    <img id="bezel" src="./assets/bezel.png">
+</a-assets>
+<a-entity dial="src:#bezel; radius:0.4; thetaStart:135; thetaEnd:315; color:black;"></a-entity>
 ```
 
 ## Properties
 
 ### src
-The static texture. Must be mostly transparent to let the pie wedge show.
+The static bezel texture. Should be mostly transparent to let the pie wedge show.
 
 ### radius
 radius of pie wedge; default **???**

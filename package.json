@@ -1,0 +1,30 @@
+{
+  "name": "aframe-dial",
+  "version": "0.1.0",
+  "description": "A shader with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer or gauge. Packaged for the A-Frame framework for WebXR.",
+  "main": "src/dial.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DougReeder/aframe-dial.git"
+  },
+  "keywords": [
+    "WebXR",
+    "VR",
+    "aframe",
+    "aframe-component",
+    "shader",
+    "gauge"
+  ],
+  "author": "Doug Reeder <reeder.29@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-glsl-loader": "^1.0.1"
+  }
+}

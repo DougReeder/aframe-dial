@@ -18,24 +18,26 @@ Basic use:
 <a-assets>
     <img id="bezel" src="./assets/bezel.png">
 </a-assets>
-<a-entity dial="src:#bezel; radius:0.4; thetaStart:135; thetaEnd:315; color:black;"></a-entity>
+<a-entity dial="src:#bezel; radius:0.95; thetaStart:135; thetaEnd:315; color:black;"></a-entity>
 ```
 
 ## Properties
 
 ### src
-The static bezel texture. Should be mostly transparent to let the pie wedge show.
+The static bezel texture.
+Should be opaque at *radius* distance from center, to hide the edge of the wedge.
+Should be mostly transparent in the center, to let the pie wedge show.
 
 ### radius
-radius of pie wedge; default **???**
+radius of pie wedge, relative to size of dial.  default **0.98**
 
 ### thetaStart
-start angle of pie wedge, in degrees; default **45**
+start angle of pie wedge, in degrees; default **0**
 
 ### thetaEnd
-end angle of pie wedge, in degrees; default **270**
+end angle of pie wedge, in degrees; default **230**
 
-### color
+### wedgeColor
 color of pie wedge, default **white**
 
 

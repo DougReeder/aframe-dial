@@ -4,35 +4,35 @@ import fragmentShader from './dialFrag.glsl'
 AFRAME.registerComponent('dial', {
   schema: {
     src: {type: 'map'},
-    thetaStart: {default: '45'},
-    thetaEnd: {default: '270'},
-    color: {type: 'color', default: 'white'},
+    radius: {default: 0.98},
+    thetaStart: {default: 0},
+    thetaEnd: {default: 230},
+    wedgeColor: {type: 'color', default: 'white'},
   },
 
-  init: function (data) {
-    var mesh;
+  init: function () {
     this.initGeometry();
     this.initShader(this.data);
 
-    mesh = new THREE.Mesh(this.geometry, this.shader);
+    const mesh = new THREE.Mesh(this.geometry, this.shader);
     this.el.setObject3D('mesh', mesh);
   },
 
   initGeometry: function () {
-    var geometry = this.geometry = new THREE.BufferGeometry();
-    var vertexCoordinateSize = 3; // 3 floats to represent x,y,z coordinates.
-    var uvCoordinateSize = 2; // 2 float to represent u,v coordinates.
-    var quadSize = 0.8;
-    var quadHalfSize = quadSize / 2.0;
+    const geometry = this.geometry = new THREE.BufferGeometry();
+    const vertexCoordinateSize = 3; // 3 floats to represent x,y,z coordinates.
+    const uvCoordinateSize = 2; // 2 float to represent u,v coordinates.
+    const quadSize = 0.8;
+    const quadHalfSize = quadSize / 2.0;
 
-    var positions = [
+    const positions = [
       -quadHalfSize, -quadHalfSize, 0.0, // bottom-left
       quadHalfSize, -quadHalfSize, 0.0, // bottom-right
       -quadHalfSize, quadHalfSize, 0.0, // top-left
       quadHalfSize, quadHalfSize, 0.0  // top-right
     ];
 
-    var uvs = [
+    const uvs = [
       0, 0,
       1, 0,
       0, 1,
@@ -49,25 +49,29 @@ AFRAME.registerComponent('dial', {
     geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, uvCoordinateSize));
   },
 
-  update: function (data) {
-  },
-
   initShader: function (data) {
-    var uniforms = {
-      uMap: {type: 't', value: null}
+    this.uniforms = {
+      uMap: {type: 't', value: null},
+      uRadius: {type: 'f', value: data.radius / 2},
+      uWedgeColor: {type: 'v3', value: new THREE.Color(data.wedgeColor)},
     };
-    var shader = this.shader = new THREE.ShaderMaterial({
-      uniforms: uniforms,
+    const shader = this.shader = new THREE.ShaderMaterial({
+      uniforms: this.uniforms,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
     });
 
-    var textureLoader = new THREE.TextureLoader();
-    textureLoader.load(data.src.currentSrc, function (texture) {
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(data.src.currentSrc, texture => {
       shader.uniforms.uMap.value = texture;
       texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
       texture.magFilfer = THREE.LinearFilter;
     });
+  },
+
+  update: function () {
+    this.uniforms.uRadius.value = this.data.radius / 2;
+    this.uniforms.uWedgeColor.value = new THREE.Color(this.data.wedgeColor);
   },
 
 });

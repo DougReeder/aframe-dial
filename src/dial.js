@@ -7,7 +7,8 @@ AFRAME.registerComponent('dial', {
     radius: {default: 0.98},
     thetaStart: {default: 0},
     thetaEnd: {default: 230},
-    wedgeColor: {type: 'color', default: 'white'},
+    wedgeColor: {type: 'color', default: 'black'},
+    backgroundColor: {type: 'color', default: 'white'}
   },
 
   init: function () {
@@ -53,7 +54,10 @@ AFRAME.registerComponent('dial', {
     this.uniforms = {
       uMap: {type: 't', value: null},
       uRadius: {type: 'f', value: data.radius / 2},
+      uThetaStart: {type: 'f', value: data.thetaStart*Math.PI/180},
+      uThetaEnd: {type: 'f', value: data.thetaEnd*Math.PI/180},
       uWedgeColor: {type: 'v3', value: new THREE.Color(data.wedgeColor)},
+      uBackgroundColor: {type: 'v3', value: new THREE.Color(data.backgroundColor)},
     };
     const shader = this.shader = new THREE.ShaderMaterial({
       uniforms: this.uniforms,
@@ -71,7 +75,12 @@ AFRAME.registerComponent('dial', {
 
   update: function () {
     this.uniforms.uRadius.value = this.data.radius / 2;
+    this.uniforms.uThetaStart.value = this.data.thetaStart * Math.PI / 180;
+    this.uniforms.uThetaEnd.value = this.data.thetaEnd * Math.PI / 180;
     this.uniforms.uWedgeColor.value = new THREE.Color(this.data.wedgeColor);
+    this.uniforms.uBackgroundColor.value = new THREE.Color(this.data.backgroundColor);
+
+    // console.log("θ start:", this.uniforms.uThetaStart, "   θ end", this.uniforms.uThetaEnd)
   },
 
 });

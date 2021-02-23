@@ -75,10 +75,39 @@ AFRAME.registerComponent('dial', {
 
   update: function () {
     this.uniforms.uRadius.value = this.data.radius / 2;
-    this.uniforms.uThetaStart.value = this.data.thetaStart * Math.PI / 180;
-    this.uniforms.uThetaEnd.value = this.data.thetaEnd * Math.PI / 180;
-    this.uniforms.uWedgeColor.value = new THREE.Color(this.data.wedgeColor);
-    this.uniforms.uBackgroundColor.value = new THREE.Color(this.data.backgroundColor);
+
+    let thetaStart = this.data.thetaStart;   // avoids modifying the attributes
+    let thetaEnd = this.data.thetaEnd;
+    let wedgeColor = this.data.wedgeColor;
+    let backgroundColor = this.data.backgroundColor;
+    if (thetaEnd - thetaStart >= 360) {
+      thetaStart = -180;
+      thetaEnd = +180;
+    }
+    while (thetaStart < -180) {
+      thetaStart += 360;
+    }
+    while (thetaStart > 180) {
+      thetaStart -= 360;
+    }
+    while (thetaEnd < -180) {
+      thetaEnd += 360;
+    }
+    while (thetaEnd > 180) {
+      thetaEnd -= 360;
+    }
+    if (thetaEnd < thetaStart) {
+      const temp = thetaEnd;
+      thetaEnd = thetaStart;
+      thetaStart = temp;
+      const tempColor = wedgeColor;
+      wedgeColor = backgroundColor;
+      backgroundColor = tempColor
+    }
+    this.uniforms.uThetaStart.value = thetaStart * Math.PI / 180;
+    this.uniforms.uThetaEnd.value = thetaEnd * Math.PI / 180;
+    this.uniforms.uWedgeColor.value = new THREE.Color(wedgeColor);
+    this.uniforms.uBackgroundColor.value = new THREE.Color(backgroundColor);
 
     // console.log("θ start:", this.uniforms.uThetaStart, "   θ end", this.uniforms.uThetaEnd)
   },

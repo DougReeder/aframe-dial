@@ -22,14 +22,16 @@ Basic use:
 ```
 
 ## Properties
+To make the dial increase counter-clockwise, set scale="-1 1 1". To put 0 at the bottom, set scale="1 -1 1".  You may need to reverse the src image also.
 
 ### src
-An image of the bezel, screws, scratches in the glass, etc.
+An image of the bezel, numbers, screws, scratches in the glass, etc.
 Should be opaque at *radius* distance from center, to hide the edge of the pie wedge and background.
 Should be mostly transparent in the center, to let the wedge and background show.
+Should be square.
 
 ### radius
-radius of pie wedge, relative to size of dial.  default **0.98**
+radius of pie wedge and background, relative to overall size of dial.  default **0.98**
 
 ### thetaStart
 start angle of pie wedge, in degrees clockwise from top; default **0**

@@ -2,7 +2,7 @@
 
 A component with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer or gauge. Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
 
-![sample screenshot](sample.png)
+![sample screenshot](assets/dial-screenshot.png)
 
 [live example scene](https://dougreeder.github.io/aframe-dial/example.html)
 
@@ -29,7 +29,7 @@ The height and width, in meters.
 default **0.25**
 
 ### src
-An image of the bezel, numbers, screws, scratches in the glass, etc.
+An image of the bezel, numerals, screws, scratches in the glass, etc.
 Should be opaque at *radius* distance from center, to hide the edge of the pie wedge and background.
 Should be mostly transparent in the center, to let the wedge and background show.
 Should be square.

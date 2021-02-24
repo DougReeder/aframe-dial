@@ -3,8 +3,9 @@ import fragmentShader from './dialFrag.glsl'
 
 AFRAME.registerComponent('dial', {
   schema: {
+    size: {default: 0.25, min: 0.01},
     src: {type: 'map'},
-    radius: {default: 0.98},
+    radius: {default: 0.98, min: 0},
     thetaStart: {default: 0},
     thetaEnd: {default: 230},
     wedgeColor: {type: 'color', default: 'black'},
@@ -12,18 +13,18 @@ AFRAME.registerComponent('dial', {
   },
 
   init: function () {
-    this.initGeometry();
+    this.initGeometry(this.data.size);
     this.initShader(this.data);
 
     const mesh = new THREE.Mesh(this.geometry, this.shader);
     this.el.setObject3D('mesh', mesh);
   },
 
-  initGeometry: function () {
+  initGeometry: function (size) {
     const geometry = this.geometry = new THREE.BufferGeometry();
     const vertexCoordinateSize = 3; // 3 floats to represent x,y,z coordinates.
     const uvCoordinateSize = 2; // 2 float to represent u,v coordinates.
-    const quadSize = 0.8;
+    const quadSize = size;
     const quadHalfSize = quadSize / 2.0;
 
     const positions = [

@@ -34,16 +34,19 @@ AFRAME.registerComponent('needle', {
     <a-scene background="color: #ECECEC">
       <a-assets>
         <img id="bezel" src="./assets/bezel.png">
+        <img id="metal" src="./assets/TexturesCom_MetalVarious0052_1_M.jpg">
       </a-assets>
-      <a-entity position="-0.5 1.5 -1.5" rotation="0 45 0"
-                dial="src:#bezel; radius:0.95; thetaStart:0; thetaEnd:45;"
-                fluctuation
-      ></a-entity>
+      <a-plane position="0 1.5 -1.51" rotation="0 0 0" width="1.4" height="0.40" src="#metal">
+        <a-entity position="-0.35 0 0.002" rotation="0 0 0"
+                  dial="size:0.30; src:#bezel; radius:0.95; thetaStart:0; thetaEnd:45;"
+                  fluctuation
+        ></a-entity>
+        <a-entity position="0.35 0 0.002" rotation="0 0 0" scale="1 1 1"
+                  dial="size:0.30; src:#bezel; radius:0.95; thetaStart:10; thetaEnd:11; wedgeColor:white; backgroundColor:#444"
+                  needle
+        ></a-entity>
+      </a-plane>
       <a-sphere position="0 1.25 -4" radius="1.25" color="#EF2D5E" shadow></a-sphere>
-      <a-entity position="0.5 1.5 -1.5" rotation="0 -45 0" scale="-1 1 1"
-                dial="src:#bezel; radius:0.95; thetaStart:10; thetaEnd:11; wedgeColor:white; backgroundColor:darkgray"
-                needle
-      ></a-entity>
 
       <a-plane position="0 0 -3" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow></a-plane>
     </a-scene>

@@ -18,11 +18,15 @@ Basic use:
 <a-assets>
     <img id="bezel" src="./assets/bezel.png">
 </a-assets>
-<a-entity dial="src:#bezel; radius:0.95; thetaStart:135; thetaEnd:315;"></a-entity>
+<a-entity dial="size:0.30; src:#bezel; radius:0.95; thetaStart:135; thetaEnd:315;"></a-entity>
 ```
 
 ## Properties
 To make the dial increase counter-clockwise, set scale="-1 1 1". To put 0 at the bottom, set scale="1 -1 1".  You may need to reverse the src image also.
+
+### size
+The height and width, in meters.
+default **0.25**
 
 ### src
 An image of the bezel, numbers, screws, scratches in the glass, etc.
@@ -31,7 +35,7 @@ Should be mostly transparent in the center, to let the wedge and background show
 Should be square.
 
 ### radius
-radius of pie wedge and background, relative to overall size of dial.  default **0.98**
+radius of pie wedge and background disk, *relative to overall size of dial*.  default **0.98**
 
 ### thetaStart
 start angle of pie wedge, in degrees clockwise from top; default **0**

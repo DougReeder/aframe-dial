@@ -7,6 +7,22 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="dist/dial.js"></script>
     <script>
+AFRAME.registerComponent('gazecursorifneeded',{
+  init: function() {
+    if (AFRAME.utils.device.isMobile() || !AFRAME.utils.device.checkHeadsetConnected()){
+      const cursorEl = document.createElement('a-entity');
+      cursorEl.setAttribute('cursor', {fuse:true, fuseTimeout:500});
+      cursorEl.setAttribute('raycaster', {objects: '[dial]'});
+      cursorEl.setAttribute('position', "0 0 -0.10");
+      cursorEl.setAttribute('geometry', {primitive:'ring', radiusInner: 0.0025, radiusOuter: 0.0030});
+      cursorEl.setAttribute('material', {color: 'gray', shader: 'flat'});
+
+      const cameraEl = this.el.querySelector('[camera]');
+      cameraEl.appendChild(cursorEl);
+    }
+  }
+});
+
 AFRAME.registerComponent('fluctuation', {
   init: function () {
     this.startRand = 0;
@@ -21,6 +37,7 @@ AFRAME.registerComponent('fluctuation', {
     this.el.setAttribute('dial', 'thetaEnd', thetaEnd);
   }
 });
+
 AFRAME.registerComponent('needle', {
   tick: function (time) {
     const thetaStart = time/1000*90;
@@ -28,27 +45,75 @@ AFRAME.registerComponent('needle', {
     this.el.setAttribute('dial', 'thetaEnd', thetaStart+1);
   }
 });
+
+AFRAME.registerComponent('cooldown-button', {
+  soundLength: 20522,
+  cooldown: null,
+  init: function() {
+    this.handlers = {
+      click: this.onClick.bind(this)
+    }
+  },
+  play: function () {
+    this.el.addEventListener('click', this.handlers.click);
+  },
+  pause: function () {
+    this.el.removeEventListener('click', this.handlers.click);
+  },
+  onClick: function (evt) {
+    if (! Number.isFinite(this.cooldown)) {
+      this.el.components.sound.playSound();
+      this.cooldown = 0;
+      this.el.setAttribute('dial', 'thetaStart', 0);
+      this.el.setAttribute('dial', 'thetaEnd', 360);
+      this.el.setAttribute('dial', 'src', '#speakerOn');
+    }
+  },
+  tick: function (time, deltaTime) {
+    if (Number.isFinite(this.cooldown)) {
+      this.cooldown += deltaTime;
+      if (this.cooldown < this.soundLength) {
+        this.el.setAttribute('dial', 'thetaStart', this.cooldown / this.soundLength * 360);
+      } else {
+        this.cooldown = null;
+        this.el.setAttribute('dial', 'thetaStart', 0);
+        this.el.setAttribute('dial', 'thetaEnd', 0);
+        this.el.setAttribute('dial', 'src', '#speakerOff');
+      }
+    }
+  }
+});
     </script>
   </head>
   <body>
-    <a-scene background="color: #ECECEC">
+    <a-scene gazecursorifneeded background="color: #ECECEC">
       <a-assets>
         <img id="bezel" src="./assets/bezel.png">
+        <img id="speakerOff" src="./assets/speaker-off.png">
+        <img id="speakerOn"  src="./assets/speaker-on.png">
+        <audio id="whale" src="./assets/448984__mbari-mars__humpback-whale-song.mp3" preload="auto"></audio>
         <img id="metal" src="./assets/TexturesCom_MetalVarious0052_1_M.jpg">
       </a-assets>
       <a-plane position="0 1.5 -1.51" rotation="0 0 0" width="1.4" height="0.40" src="#metal">
-        <a-entity position="-0.35 0 0.002" rotation="0 0 0"
+        <a-entity position="-0.45 0 0.002" rotation="0 0 0"
                   dial="size:0.30; src:#bezel; radius:0.95; thetaStart:0; thetaEnd:45; wedgeColor:#222; backgroundColor:#e4dcc9;"
                   fluctuation
         ></a-entity>
-        <a-entity position="0.35 0 0.002" rotation="0 0 0" scale="1 1 1"
+        <a-entity position="0 0 0.002" rotation="0 0 0" scale="1 1 1"
                   dial="size:0.30; src:#bezel; radius:0.95; thetaStart:10; thetaEnd:11; wedgeColor:white; backgroundColor:#444"
                   needle
+        ></a-entity>
+        <a-entity position="0.45 0 0.002" rotation="0 0 0" scale="1 1 1"
+                  dial="size:0.20; src:#speakerOff; radius:0.95; thetaStart:0; thetaEnd:0; wedgeColor:cornflowerblue; backgroundColor:white"
+                  cooldown-button sound="src:#whale"
         ></a-entity>
       </a-plane>
       <a-sphere position="0 1.25 -4" radius="1.25" color="#EF2D5E" shadow></a-sphere>
 
       <a-plane position="0 0 -3" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow></a-plane>
+
+      <a-entity position="0 1.6 0" camera look-controls wasd-controls="acceleration:30"></a-entity>
+      <a-entity laser-controls="hand: left" raycaster="objects:[dial];"></a-entity>
     </a-scene>
   </body>
 </html>

@@ -5,6 +5,7 @@ A component with a transparent bezel texture and dynamic pie-wedge shape, suitab
 ![sample screenshot](assets/dial-screenshot.png)
 
 [live example scene](https://dougreeder.github.io/aframe-dial/example.html)
+The rightmost dial is a clickable button.
 
 
 Include using
@@ -29,7 +30,7 @@ The height and width, in meters.
 default **0.25**
 
 ### src
-An image of the bezel, numerals, screws, scratches in the glass, etc.
+An image of the bezel, numerals, screws, scratches in the glass, etc., or icon if you're using this as a button.
 Should be opaque at *radius* distance from center, to hide the edge of the pie wedge and background.
 Should be mostly transparent in the center, to let the wedge and background show.
 Should be square.

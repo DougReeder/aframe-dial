@@ -16,7 +16,7 @@ AFRAME.registerComponent('dial', {
     this.initGeometry(this.data.size);
     this.initShader(this.data);
 
-    const mesh = new THREE.Mesh(this.geometry, this.shader);
+    const mesh = new THREE.Mesh(this.geometry, this.shaderMaterial);
     this.el.setObject3D('mesh', mesh);
   },
 
@@ -60,21 +60,16 @@ AFRAME.registerComponent('dial', {
       uWedgeColor: {type: 'v3', value: new THREE.Color(data.wedgeColor)},
       uBackgroundColor: {type: 'v3', value: new THREE.Color(data.backgroundColor)},
     };
-    const shader = this.shader = new THREE.ShaderMaterial({
+    this.shaderMaterial = new THREE.ShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
     });
 
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load(data.src.currentSrc, texture => {
-      shader.uniforms.uMap.value = texture;
-      texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
-      texture.magFilfer = THREE.LinearFilter;
-    });
+    this.textureLoader = new THREE.TextureLoader();
   },
 
-  update: function () {
+  update: function (oldData) {
     this.uniforms.uRadius.value = this.data.radius / 2;
 
     let thetaStart = this.data.thetaStart;   // avoids modifying the attributes
@@ -111,6 +106,14 @@ AFRAME.registerComponent('dial', {
     this.uniforms.uBackgroundColor.value = new THREE.Color(backgroundColor);
 
     // console.log("θ start:", this.uniforms.uThetaStart, "   θ end", this.uniforms.uThetaEnd)
+
+    if (this.data.src !== oldData.src) {
+      this.textureLoader.load(this.data.src.currentSrc, texture => {
+        this.shaderMaterial.uniforms.uMap.value = texture;
+        texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
+        texture.magFilfer = THREE.LinearFilter;
+      });
+    }
   },
 
 });

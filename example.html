@@ -13,8 +13,8 @@ AFRAME.registerComponent('gazecursorifneeded',{
       const cursorEl = document.createElement('a-entity');
       cursorEl.setAttribute('cursor', {fuse:true, fuseTimeout:500});
       cursorEl.setAttribute('raycaster', {objects: '[dial]'});
-      cursorEl.setAttribute('position', "0 0 -0.10");
-      cursorEl.setAttribute('geometry', {primitive:'ring', radiusInner: 0.0025, radiusOuter: 0.0030});
+      cursorEl.setAttribute('position', "0 0 -1.00");
+      cursorEl.setAttribute('geometry', {primitive:'ring', radiusInner: 0.025, radiusOuter: 0.030});
       cursorEl.setAttribute('material', {color: 'gray', shader: 'flat'});
 
       const cameraEl = this.el.querySelector('[camera]');

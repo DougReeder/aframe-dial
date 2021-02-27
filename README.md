@@ -1,16 +1,15 @@
 # Dial for A-Frame WebXR
 
-A component with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer or gauge. Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
+A component with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer, gauge, or button with cooldown timer. Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
 
 ![sample screenshot](assets/dial-screenshot.png)
 
-[live example scene](https://dougreeder.github.io/aframe-dial/example.html)
-The rightmost dial is a clickable button.
+[live example scene](https://dougreeder.github.io/aframe-dial/example.html) - the rightmost dial is a clickable button
 
 
 Include using
 ```html
-<script src="https://unpkg.com/aframe-dial@^1.0.0/dist/dial.js"></script>
+<script src="https://unpkg.com/aframe-dial@^1.1.0/dist/dial.js"></script>
 ```
 
 
@@ -25,6 +24,8 @@ Basic use:
 ## Properties
 To make the dial increase counter-clockwise, set scale="-1 1 1". To put 0 at the bottom, set scale="1 -1 1".  You may need to reverse the src image also.
 
+All properties may be changed on the fly.
+
 ### size
 The height and width, in meters.
 default **0.25**
@@ -32,8 +33,9 @@ default **0.25**
 ### src
 An image of the bezel, numerals, screws, scratches in the glass, etc., or icon if you're using this as a button.
 Should be opaque at *radius* distance from center, to hide the edge of the pie wedge and background.
-Should be mostly transparent in the center, to let the wedge and background show.
-Should be square.
+Should be mostly transparent in the center, to let the wedge and background show. Translucent pixels are fine here.
+Outside of *radius* distance from center, pixels should be totally opaque, or totally transparent.
+Image should be square.
 
 ### radius
 radius of pie wedge and background disk, *relative to overall size of dial*.  default **0.98**

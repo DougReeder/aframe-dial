@@ -40,7 +40,7 @@ AFRAME.registerComponent('fluctuation', {
 
 AFRAME.registerComponent('needle', {
   tick: function (time) {
-    const thetaStart = time/1000*90;
+    const thetaStart = time/1000*30;
     this.el.setAttribute('dial', 'thetaStart', thetaStart);
     this.el.setAttribute('dial', 'thetaEnd', thetaStart+1);
   }

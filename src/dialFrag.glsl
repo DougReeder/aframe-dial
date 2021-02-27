@@ -4,6 +4,7 @@ uniform sampler2D uMap;
 uniform float uRadius;
 uniform float uThetaStart;   // −π to +π
 uniform float uThetaEnd;   // −π to +π
+uniform float uThetaMid;   // −π to +π
 uniform vec3 uWedgeColor;
 uniform vec3 uBackgroundColor;
 
@@ -12,9 +13,13 @@ void main() {
 
     vec2 diff = vUv - center;
     float theta = atan(diff.x, diff.y);
-    vec3 dynamicColor = (theta > uThetaStart && theta < uThetaEnd) ? uWedgeColor : uBackgroundColor;
-
     float radius = length(diff);
+    float edge = 0.007 / radius * gl_FragCoord.z / gl_FragCoord.w;
+    vec3 dynamicColor = uThetaStart == uThetaEnd ?
+        uBackgroundColor :
+        mix(uWedgeColor, uBackgroundColor,
+            smoothstep(-edge, +edge, theta < uThetaMid ? uThetaStart - theta :  theta - uThetaEnd));
+
     vec4 diskColor = vec4(dynamicColor, radius < uRadius ? 1.0 : 0.0);
 
     vec4 texel = texture2D(uMap, vUv);

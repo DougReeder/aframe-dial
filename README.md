@@ -1,6 +1,8 @@
 # Dial for A-Frame WebXR
 
-A component with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer, gauge, or button with cooldown timer. Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
+A component with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer, gauge, or button with cooldown timer.
+It ignores scene lighting.
+Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
 
 ![sample screenshot](assets/dial-screenshot.png)
 
@@ -33,8 +35,7 @@ default **0.25**
 ### src
 An image of the bezel, numerals, screws, scratches in the glass, etc., or icon if you're using this as a button.
 Should be opaque at *radius* distance from center, to hide the edge of the pie wedge and background.
-Should be mostly transparent in the center, to let the wedge and background show. Translucent pixels are fine here.
-Outside of *radius* distance from center, pixels should be totally opaque, or totally transparent.
+Should be mostly transparent in the center, to let the wedge and background show.
 Image should be square.
 
 ### radius

@@ -19,12 +19,8 @@ void main() {
         uBackgroundColor :
         mix(uWedgeColor, uBackgroundColor,
             smoothstep(-edge, +edge, theta < uThetaMid ? uThetaStart - theta :  theta - uThetaEnd));
-
-    vec4 diskColor = vec4(dynamicColor, radius < uRadius ? 1.0 : 0.0);
+    vec4 diskColor = vec4(dynamicColor, 1.0);
 
     vec4 texel = texture2D(uMap, vUv);
-    vec4 resultColor = mix(diskColor, texel, texel.a);
-    if (resultColor.a < 0.5)
-        discard;
-    gl_FragColor = resultColor;
+    gl_FragColor = radius < uRadius ? mix(diskColor, texel, texel.a) : texel;
 }

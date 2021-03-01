@@ -65,6 +65,7 @@ AFRAME.registerComponent('dial', {
       uniforms: this.uniforms,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
+      transparent: true,
     });
 
     this.textureLoader = new THREE.TextureLoader();

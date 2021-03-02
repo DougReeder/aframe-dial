@@ -1,3 +1,7 @@
+#extension GL_OES_standard_derivatives : enable
+
+precision mediump float;
+
 varying vec2 vUv;
 
 uniform sampler2D uMap;
@@ -14,7 +18,11 @@ void main() {
     vec2 diff = vUv - center;
     float theta = atan(diff.x, diff.y);
     float radius = length(diff);
-    float edge = 0.007 / radius * gl_FragCoord.z / gl_FragCoord.w;
+#ifdef GL_OES_standard_derivatives
+    float edge = length(vec2(dFdx(vUv.x), dFdy(vUv.y))) * 0.70710678118654757 / radius;
+#else
+    float edge = 0.005 / max(radius, 0.03) * gl_FragCoord.z / gl_FragCoord.w;
+#endif
     vec3 dynamicColor = uThetaStart == uThetaEnd ?
         uBackgroundColor :
         mix(uWedgeColor, uBackgroundColor,

@@ -52,6 +52,11 @@ AFRAME.registerComponent('dial', {
   },
 
   initShader: function (data) {
+    const context = this.el.sceneEl?.canvas?.getContext('webgl2')
+    // console.log("supported extensions:", context.getSupportedExtensions());
+    const derivativesExtension = context.getExtension('OES_standard_derivatives');
+    // console.log("getExtension OES_standard_derivatives:", derivativesExtension);
+
     this.uniforms = {
       uMap: {type: 't'},
       uRadius: {type: 'f'},
@@ -61,7 +66,7 @@ AFRAME.registerComponent('dial', {
       uWedgeColor: {type: 'v3'},
       uBackgroundColor: {type: 'v3'},
     };
-    this.shaderMaterial = new THREE.ShaderMaterial({
+    this.shaderMaterial = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,

@@ -19,7 +19,7 @@ void main() {
     float theta = atan(diff.x, diff.y);
     float radius = length(diff);
 #ifdef GL_OES_standard_derivatives
-    float edge = length(vec2(dFdx(vUv.x), dFdy(vUv.y))) * 0.70710678118654757 / radius;
+    float edge = length(vec2(dFdx(vUv.x), dFdy(vUv.y))) / max(radius, 0.03);
 #else
     float edge = 0.005 / max(radius, 0.03) * gl_FragCoord.z / gl_FragCoord.w;
 #endif

@@ -52,10 +52,10 @@ AFRAME.registerComponent('dial', {
   },
 
   initShader: function (data) {
-    const context = this.el.sceneEl?.canvas?.getContext('webgl2')
-    // console.log("supported extensions:", context.getSupportedExtensions());
-    const derivativesExtension = context.getExtension('OES_standard_derivatives');
-    // console.log("getExtension OES_standard_derivatives:", derivativesExtension);
+    const webGL1Context = this.el.sceneEl.canvas.getContext('webgl');
+    if (webGL1Context) {
+      webGL1Context.getExtension('OES_standard_derivatives');
+    }
 
     this.uniforms = {
       uMap: {type: 't'},

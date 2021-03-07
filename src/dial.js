@@ -6,6 +6,7 @@ AFRAME.registerComponent('dial', {
     size: {default: 0.25, min: 0.01},
     src: {type: 'map'},
     radius: {default: 0.98, min: 0},
+    innerRadius: {default: 0, min: 0},
     thetaStart: {default: 0},
     thetaEnd: {default: 230},
     wedgeColor: {type: 'color', default: 'black'},
@@ -60,10 +61,12 @@ AFRAME.registerComponent('dial', {
     this.uniforms = {
       uMap: {type: 't'},
       uRadius: {type: 'f'},
+      uInnerRadius: {type: 'f'},
       uThetaStart: {type: 'f'},
       uThetaEnd: {type: 'f'},
       uThetaMid: {type: 'f'},
       uWedgeColor: {type: 'v3'},
+      uRingBackgroundColor: {type: 'v3'},
       uBackgroundColor: {type: 'v3'},
     };
     this.shaderMaterial = new THREE.RawShaderMaterial({
@@ -78,11 +81,12 @@ AFRAME.registerComponent('dial', {
 
   update: function (oldData) {
     this.uniforms.uRadius.value = this.data.radius / 2;
+    this.uniforms.uInnerRadius.value = Math.min(this.data.innerRadius / 2, this.uniforms.uRadius.value - 0.01);
 
     let thetaStart = this.data.thetaStart;   // avoids modifying the attributes
     let thetaEnd = this.data.thetaEnd;
     let wedgeColor = this.data.wedgeColor;
-    let backgroundColor = this.data.backgroundColor;
+    let ringBackgroundColor = this.data.backgroundColor;
     if (thetaEnd - thetaStart >= 360) {
       thetaStart = -180;
       thetaEnd = +180;
@@ -103,15 +107,16 @@ AFRAME.registerComponent('dial', {
       const temp = thetaEnd;
       thetaEnd = thetaStart;
       thetaStart = temp;
-      const tempColor = wedgeColor;
-      wedgeColor = backgroundColor;
-      backgroundColor = tempColor
+      wedgeColor = this.data.backgroundColor;
+      ringBackgroundColor = this.data.wedgeColor
     }
     this.uniforms.uThetaStart.value = thetaStart * Math.PI / 180;
     this.uniforms.uThetaEnd.value = thetaEnd * Math.PI / 180;
     this.uniforms.uThetaMid.value = (this.uniforms.uThetaStart.value + this.uniforms.uThetaEnd.value) / 2;
     this.uniforms.uWedgeColor.value = new THREE.Color(wedgeColor);
-    this.uniforms.uBackgroundColor.value = new THREE.Color(backgroundColor);
+    this.uniforms.uRingBackgroundColor.value = new THREE.Color(ringBackgroundColor);
+
+    this.uniforms.uBackgroundColor.value = new THREE.Color(this.data.backgroundColor);
 
     // console.log("θ start:", this.uniforms.uThetaStart, "   θ end", this.uniforms.uThetaEnd)
 

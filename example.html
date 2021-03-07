@@ -23,18 +23,55 @@ AFRAME.registerComponent('gazecursorifneeded',{
   }
 });
 
-AFRAME.registerComponent('fluctuation', {
+AFRAME.registerComponent('fluctuation1', {
   init: function () {
-    this.startRand = 0;
-    this.endRand = 45;
+    this.el.setAttribute('dial', 'thetaStart', 0);
+    this.endRand = 90;
+    this.up = true;
   },
   tick: function (time) {
-    this.startRand += (Math.random() - 0.41);
-    this.endRand += (Math.random() - 0.4);
-    const thetaStart = Math.cos(time/1500) * 20 + this.startRand;
+    if (this.up) {
+      this.endRand += (Math.random() - 0.35);
+    } else {
+      this.endRand -= (Math.random() - 0.4);
+    }
     const thetaEnd = Math.sin(time/1000) * 20 + this.endRand;
-    this.el.setAttribute('dial', 'thetaStart', thetaStart);
+    if (thetaEnd >= 330) {
+      this.up = false;
+    } else if (thetaEnd <= 30) {
+      this.up = true;
+    }
     this.el.setAttribute('dial', 'thetaEnd', thetaEnd);
+  }
+});
+
+AFRAME.registerComponent('fluctuation2', {
+  init: function () {
+    this.el.setAttribute('dial', 'thetaStart', -135);
+    this.endRand = -90;
+    this.up = true;
+  },
+  tick: function (time) {
+    if (this.up) {
+      this.endRand += (Math.random() - 0.4);
+    } else {
+      this.endRand -= (Math.random() - 0.35);
+    }
+    const thetaEnd = Math.cos(time/1000) * 20 + this.endRand;
+    if (thetaEnd >= 120) {
+      this.up = false;
+    } else if (thetaEnd <= -90) {
+      this.up = true;
+    }
+    this.el.setAttribute('dial', 'thetaEnd', thetaEnd);
+
+    if (thetaEnd < 45) {
+      this.el.setAttribute('dial', 'wedgeColor', 'green');
+    } else if (thetaEnd < 90) {
+      this.el.setAttribute('dial', 'wedgeColor', 'orange');
+    } else {
+      this.el.setAttribute('dial', 'wedgeColor', 'red');
+    }
   }
 });
 
@@ -95,15 +132,19 @@ AFRAME.registerComponent('cooldown-button', {
         <img id="metal" src="./assets/TexturesCom_MetalVarious0052_1_M.jpg">
       </a-assets>
       <a-plane position="0 1.5 -1.51" rotation="0 0 0" width="1.4" height="0.40" src="#metal">
-        <a-entity position="-0.45 0 0.002" rotation="0 0 0"
-                  dial="size:0.30; src:#bezel; radius:0.95; thetaStart:0; thetaEnd:45; wedgeColor:#222; backgroundColor:#e4dcc9;"
-                  fluctuation
+        <a-entity position="-0.50 0 0.002" rotation="0 0 0"
+                  dial="size:0.30; src:#bezel; radius:0.95; thetaStart:0; thetaEnd:45; wedgeColor:skyblue; backgroundColor:#e4dcc9;"
+                  fluctuation1
         ></a-entity>
-        <a-entity position="0 0 0.002" rotation="0 0 0" scale="1 1 1"
+        <a-entity position="-0.15 0 0.002" rotation="0 0 0"
+                  dial="size:0.30; src:#bezel; radius:0.95; innerRadius:0.33; thetaStart:0; thetaEnd:45; wedgeColor:#222; backgroundColor:#e4dcc9;"
+                  fluctuation2
+        ></a-entity>
+        <a-entity position="0.20 0 0.002" rotation="0 0 0" scale="1 1 1"
                   dial="size:0.30; src:#bezel; radius:0.95; thetaStart:10; thetaEnd:11; wedgeColor:white; backgroundColor:#444"
                   needle
         ></a-entity>
-        <a-entity position="0.45 0 0.002" rotation="0 0 0" scale="1 1 1"
+        <a-entity position="0.50 0 0.002" rotation="0 0 0" scale="1 1 1"
                   dial="size:0.20; src:#speakerOff; radius:0.95; thetaStart:0; thetaEnd:0; wedgeColor:cornflowerblue; backgroundColor:white"
                   cooldown-button sound="src:#whale"
         ></a-entity>

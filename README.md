@@ -1,6 +1,6 @@
 # Dial for A-Frame WebXR
 
-A component with a transparent bezel texture and dynamic pie-wedge shape, suitable for a timer, gauge, or button with cooldown timer.
+A component with a transparent bezel texture and dynamic pie-wedge or circular bar shape. Suitable for a timer, gauge, or button with cooldown timer.
 It ignores scene lighting.
 Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://immersive-web.github.io/).
 
@@ -11,7 +11,7 @@ Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://imme
 
 Include using
 ```html
-<script src="https://unpkg.com/aframe-dial@^1.1.0/dist/dial.js"></script>
+<script src="https://unpkg.com/aframe-dial@^1.2.0/dist/dial.js"></script>
 ```
 
 
@@ -34,21 +34,25 @@ default **0.25**
 
 ### src
 An image of the bezel, numerals, screws, scratches in the glass, etc., or icon if you're using this as a button.
-Should be opaque at *radius* distance from center, to hide the edge of the pie wedge and background.
+Should be opaque at *radius* distance from center, to hide the edge of the pie wedge (or circular bar) and background.
 Should be mostly transparent in the center, to let the wedge and background show.
 Image should be square.
 
 ### radius
-radius of pie wedge and background disk, *relative to overall size of dial*.  default **0.98**
+outer radius of pie wedge (or circular bar) and background disk, *relative to overall size of dial*.  default **0.98**
+
+### innerRadius
+Leave at 0 for a pie wedge, set 0 < innerRadius < radius to generate a circular bar instead of a pie wedge.
+default **0**
 
 ### thetaStart
-start angle of pie wedge, in degrees clockwise from top; default **0**
+start angle of pie wedge (or circular bar), in degrees clockwise from top. May be negative. default **0**
 
 ### thetaEnd
-end angle of pie wedge, in degrees clockwise from top; default **230**
+end angle of pie wedge (or circular bar), in degrees clockwise from top. May be negative. default **230**
 
 ### wedgeColor
-color of pie wedge, default **black**
+color of pie wedge (or circular bar), default **black**
 
 ### backgroundColor
 color of pie background, default **white**

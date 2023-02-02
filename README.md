@@ -11,7 +11,7 @@ Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://imme
 
 Include using
 ```html
-<script src="https://unpkg.com/aframe-dial@^1.2.0/dist/dial.js"></script>
+<script src="https://unpkg.com/aframe-dial@^1.2.1/dist/dial.js"></script>
 ```
 
 

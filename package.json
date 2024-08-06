@@ -1,6 +1,6 @@
 {
   "name": "aframe-dial",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A shader with a transparent bezel texture and dynamic pie-wedge or circular bar shape. Suitable for a timer, gauge or button with cooldown timer. Packaged for the A-Frame framework for WebXR.",
   "main": "dist/dial.js",
   "files": ["dist/dial.js"],
@@ -24,8 +24,8 @@
   "author": "Doug Reeder <reeder.29@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^5.23.0",
-    "webpack-cli": "^4.5.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
     "webpack-glsl-loader": "^1.0.1"
   }
 }

@@ -122,6 +122,7 @@ AFRAME.registerComponent('dial', {
 
     if (this.data.src !== oldData.src) {
       this.textureLoader.load(this.data.src.currentSrc, texture => {
+        this.shaderMaterial.uniforms.uMap.value?.dispose();
         this.shaderMaterial.uniforms.uMap.value = texture;
         texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
         texture.magFilfer = THREE.LinearFilter;

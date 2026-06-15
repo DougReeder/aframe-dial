@@ -6,12 +6,12 @@ Packaged for the [A-Frame](https://aframe.io) framework for [WebXR](https://imme
 
 ![sample screenshot](assets/dial-screenshot.png)
 
-[live example scene](https://dougreeder.github.io/aframe-dial/example.html) - the rightmost dial is a clickable button
+[live example scene](https://dougreeder.github.io/aframe-dial/example.html) - the rightmost dial is a button that can be clicked using the gaze cursor.
 
 
 Include using
 ```html
-<script src="https://unpkg.com/aframe-dial@^1.2.1/dist/dial.js"></script>
+<script src="https://unpkg.com/aframe-dial@^1.2.2/dist/dial.js"></script>
 ```
 
 

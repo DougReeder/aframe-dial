@@ -18,6 +18,10 @@
     "VR",
     "aframe",
     "aframe-component",
+    "Three.js",
+    "threejs",
+    "WebGL",
+    "GLSL",
     "shader",
     "gauge"
   ],
